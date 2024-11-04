@@ -1,16 +1,20 @@
+/* Importação do Redux para pegar os dados do carrinho */
+import { useSelector } from 'react-redux'
+
+/* Importação dos estilos */
 import * as S from './styles'
 
-import { Game } from '../../App'
-
+/* Importação de Componentes para o header */
 import cesta from '../../assets/cesta.png'
 import { paraReal } from '../Produto'
 
-type Props = {
-  itensNoCarrinho: Game[]
-}
+/* Importação da tipagem para o reducer */
+import { RootReducer } from '../../store'
 
-const Header = ({ itensNoCarrinho }: Props) => {
-  const valorTotal = itensNoCarrinho.reduce((acc, item) => {
+const Header = () => {
+  const itens = useSelector((state: RootReducer) => state.carrinho.itens)
+
+  const valorTotal = itens.reduce((acc, item) => {
     acc += item.preco
     return acc
   }, 0)
@@ -21,7 +25,7 @@ const Header = ({ itensNoCarrinho }: Props) => {
       <div>
         <img src={cesta} />
         <span>
-          {itensNoCarrinho.length} itens, valor total: {paraReal(valorTotal)}
+          {itens.length} itens, valor total: {paraReal(valorTotal)}
         </span>
       </div>
     </S.Header>
